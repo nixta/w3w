@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="Explore the world in 3 words. what3words is a giant grid comprised of 57 trillion 3m x 3m squares that cover the entire globe. It is the simplest way to communicate location.">
+
+	<meta property="og:title" content="what3words | Addressing the world">
+	<meta property="og:url" content="http://map.what3words.com">
+	<meta property="og:description" content="Explore the world in 3 words. what3words is a giant grid comprised of 57 trillion 3m x 3m squares that cover the entire globe. It is the simplest way to communicate location.">
+	<meta property="og:image" content="http://www.what3words.com/images/social/fb-share.png">
+	<meta property="og:image:width" content="300">
+	<meta property="og:image:height" content="300">
+	<meta property="og:type" content="website">
+	<meta property="og:locale" content="en_GB">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<link href="http://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css">
+	<link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'>
+	<meta name="google-site-verification" content="VZQS07w_RKImv4qF7geNHIIzYbb7OYi7tmxGuoC0rpw" />
+	<link href="http://map.what3words.com/css/styles.css" rel="stylesheet">
+	<title>what3words | Addressing the world</title>
+	<meta name="apple-itunes-app" content="app-id=657878530">
+	<meta name="google-play-app" content="app-id=com.what3words.android">
+	<link rel="stylesheet" href="http://map.what3words.com/css/jquery.smartbanner.css?v=fd4d6">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css">
+	<link href="http://map.what3words.com/css/res-tablet.css" rel="stylesheet" media="screen and (max-width: 1025px)"><link href="http://map.what3words.com/css/res-mobile.css" rel="stylesheet" media="screen and (max-width: 601px)">
+	<!--[if lte IE 8]>
+	input[type="password"] { font-family: Arial; }
+	<![endif]-->
+</head>
+<body class="pg-home">
+		<div id="head">
+			
+			<a class="logo" href="/"><img src="http://map.what3words.com/images/logo-small-highres.png" /></a>
+			
+			<div class="menu-main">
+				<a href="/"><img src="http://map.what3words.com/images/head/w3w_mapsite_NewLogo.png" /></a>
+			</div>
+			<nav class="nav-collapse">
+				<div class="menu-second">
+					<ul>
+													<li><a href="//what3words.com/" target="_blank">About</a></li>
+						
+												<li><a id="download-app"href="/login">Download App</a></li>
+						<li><a target="_blank" href="http://developer.what3words.com">Developer</a></li>
+						<li><a href="http://what3words.com/contact">Contact</a></li>
+													<li><a class="develop" href="/login">Log in</a></li>				
+												<li><span class="language ">
+							<a href="#" class="language dropdown-toggle">
+								English								&nbsp;▾
+							</a>
+							<div class="dropdown">
+								<a href="http://map.what3words.com/language/18" rel="nofollow" class="language ltr">Deutsch</a><a href="http://map.what3words.com/language/14" rel="nofollow" class="language ltr">English</a><a href="http://map.what3words.com/language/13" rel="nofollow" class="language ltr">Español</a><a href="http://map.what3words.com/language/17" rel="nofollow" class="language ltr">Français</a><a href="http://map.what3words.com/language/3" rel="nofollow" class="language ltr">Português</a><a href="http://map.what3words.com/language/32" rel="nofollow" class="language ltr">Svenska</a><a href="http://map.what3words.com/language/25" rel="nofollow" class="language ltr">Türkçe</a><a href="http://map.what3words.com/language/12" rel="nofollow" class="language ltr">Русский</a>								<a class="change-three-word-lang" href="/">Change 3 words language</a>
+							</div>
+						</span>
+						</li>
+					</ul>
+				</div>
+				<a href="#" id="collapse" class="">Menu</a>
+			</nav>
+		</div>
+		<div id="map">
+		<div id="search">
+			<form method="get" action="/" class="search">
+				<div class="words">
+					<input type="submit" autocorrect="off" autocapitalize="off" value="" class="button search-lens">
+					<input class="w3w-search text" type="text" placeholder="" name="words">	
+					<div id="side"><p id="error">We couldn't find any results for <span class="text"></span></div>
+				
+					<div class="convert">
+						<a class="tooltip-icon dark" data-info="		&lt;strong&gt;Search for anything at all, for example:&lt;/strong&gt;&lt;br&gt;
+				&lt;a href=&quot;/limit.broom.flip&quot; class=&quot;example&quot;&gt;limit.broom.flip &lt;span&gt;3 words&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+		&lt;a href=&quot;/Notting Hill, London&quot; class=&quot;example&quot;&gt;Notting Hill, London &lt;span&gt;any location&lt;/span&gt;&lt;/a&gt;
+		" href="#">?</a>
+					</div>
+				
+				</div>	
+				
+			</form>
+		</div>
+			<div id="sharebox">
+			<div class="close"></div>
+			<div class="inner">
+				<h2>Share OneWord location</h2>
+				<!--<p>Share this location on your social networks, or via GPS/SMS, click the icons below to share with your friends</p>-->
+				<input type="text" class="link" value="http://w3w.co/" readonly="readonly">
+				<div class="buttons">
+					<a href="/" target="_blank" class="social facebook" title="Facebook"></a>
+					<a href="/" target="_blank" class="social twitter" title="Twitter"></a>
+					<a href="/" target="_blank" class="social googleplus" title="Google Plus"></a>
+					<a href="/" title="GPS" class="gps"></a>
+					<a href="/" title="embed" class="embed"></a>
+					<a href="/" title="Email" class="email"></a>
+				</div>
+			</div>
+		</div>
+			
+	<div class="mapInner">
+		<div id="map-canvas"></div>
+		<div class="pin css"></div>
+	</div>
+	
+	<div id="oneword-details-mobile">
+		<a href="#" class="close-icon"><img src="http://map.what3words.com/images/map/icon-details-arrow.png" /></a>
+		<section class="location">
+			<!--<h3>Location</h3>-->
+			<strong><span class='name'></span></strong>
+			<p class="address"></p>
+		</section>
+		<section class="description">
+			<!--<h3>Description</h3>-->
+			<div class="contact-details">
+				<p><span class="website"></span></p>
+				<p><span class="telephone"></span></p>
+				<p><span class="email"></span></p>
+			</div>
+		</section>
+		<section class="notes">
+			<section class="delivery-notes">
+				<!--<h3>Delivery notes</h3>-->
+				<p class="delivery-notes"></p>
+			</section>
+			<section class="general-notes">
+				<!--<h3>General notes</h3>-->
+				<p class="general-notes"></p>
+			</section>
+			<section class='social'>
+				<a href="/" target="_blank" class="facebook" title="Facebook"></a>
+				<a href="/" target="_blank" class="twitter" title="Twitter"></a>
+				<a href="/" target="_blank" class="googleplus" title="Google Plus"></a>
+				<a href="/" target="_blank" class="linkedin" title="LinkedIn"></a>
+				<a href="/" target="_blank" class="instagram" title="Instagram"></a>
+				<div class="clear"></div>
+			</section>
+		</section>
+		<div class="clear"></div>
+	</div>
+	<div id="word-view" class="">
+		<div class="wordbar-toggle"></div>
+		<a href="#" id="oneword-details-toggle"></a>
+		<a class="history back"></a>
+		<div class="display">&nbsp;</div>
+		<a href="#"class="history forward"></a>
+		<div class="open-maps">Directions to pin</div>
+		<div class="share">Share pin location</div>
+				<!--<div class="buy"><img src="/images/map/marker-small-oneword.png" />Buy OneWord</div>-->
+	</div>
+	<div id="directions">
+		<div class="inner">
+			<div class="directions-header">
+				<div class="distance">-</div>
+				<a class="toggle">
+					<span class='show'>Show instructions</span>
+					<span class='hide'>Hide instructions</span>
+				</a>
+				<div class="time">-</div>
+				<div class="clear"></div>
+			</div>
+			<div class="directions-container">
+				<ol class="directions-list">
+
+				</ol>
+			</div>
+			<div class="directions-menu">
+				<div class="google-icon">
+					<a class="google-maps" target="_blank" href="#"><img src="http://map.what3words.com/images/map/directions.png" /></a>
+				</div>
+				<div class="icons">
+					<a href="#" data-mode="walking" class="walking">&nbsp;</a>
+					<a href="#" data-mode="cycling" class="cycling">&nbsp;</a>
+					<a href="#" data-mode="driving" class="driving active">&nbsp;</a>
+					<a href="#" data-mode="public" class="public">&nbsp;</a>
+				</div>
+				<div class="close-icon">
+					<a href="#" class="button close">X</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	transLoading		= 'Loading 3 words'
+	transPlacePinHere	= 'Place pin here';
+	transFindPin		= 'Find Pin';
+	transLockPin		= 'Lock Pin';
+	transUnlockPin		= 'Unlock Pin';
+	transUnlockExplore	= 'Unlock pin from map to explore';
+	transShare		= 'Share';
+	transDirToPin		= 'Directions to pin';
+	transSharePin		= 'Share pin location';
+	transMoveToPin		= 'Move OneWord to pin';
+	transBuyOneWord		= 'Buy OneWord';
+	transCentreMap		= 'Center map to pin';
+	transChangeLang		= 'Change 3 word language';
+	transEmbed		= 'Embed';
+	transWidget		= 'Widget design';
+	transDark		= 'Dark background';
+	transLight		= 'Light background';
+	transSize		= 'Size';
+	transLarge		= 'Large';
+	transMedium		= 'Medium';
+	transSmall		= 'Small';
+	transOpenNav		= 'Open navigation in';
+</script>
+<script>
+currentLanguage = 'en';
+
+rcmenuLanguages = {
+	'languages': [
+		{'code': 'es', 'menuItem': '3 words: Spanish'},
+		{'code': 'en', 'menuItem': '3 words: English'},
+		{'code': 'ru', 'menuItem': '3 words: Russian'},
+		{'code': 'sv', 'menuItem': '3 words: Swedish'},
+		{'code': 'de', 'menuItem': '3 words: German'},
+		{'code': 'fr', 'menuItem': '3 words: French'},
+	]
+};
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://map.what3words.com/javascript/_liberty.structure.js?v=989c4"></script>
+<script src="http://map.what3words.com/javascript/general.js?v=4fed4"></script>
+<script src="http://map.what3words.com/javascript/popup.js?v=745cd"></script>
+<script src="http://map.what3words.com/javascript/jquery.smartbanner.js?v=26f6e"></script>
+
+<!-- <script src="//maps.googleapis.com/maps/api/js?libraries=places&client=gme-what3wordsltd&sensor=false&language=en"></script> -->
+<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+<script src="http://js.arcgis.com/3.13/"></script>
+
+<script src="http://map.what3words.com/javascript/jquery.touchwipe.min.js?v=e5034"></script>
+<script src="javascript/map.js?v=98b32"></script>
+<script src="http://map.what3words.com/javascript/geo.js?v=bcf2d"></script>
+<script src="http://map.what3words.com/javascript/grid.js?v=bf645"></script>
+<script src="http://map.what3words.com/javascript/geolocationmarker-compiled.js?v=a15cb"></script>
+<script src="http://map.what3words.com/javascript/selfie.js?v=441b8"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="http://map.what3words.com/javascript/autocomplete.js?v=b3245"></script>
+<script> $(document).ready(function(){ $.smartbanner({ daysHidden: 7, daysReminder: 1, title: 'What3Words'  }); }); 
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+ ga('create', 'UA-58731966-3', 'auto');  // Replace with your property ID.
+ ga('send', 'pageview'); 
+Map.position = { lat: 40.704234, lng: -73.917927 };if ($(window).width() < 500) { Map.zoom = 17;} else {Map.zoom = 20;}Map.language = 'en';
+
+	$(document).ready(function(){
+
+		//check mobile window size and show a download popup once a week from user visit
+		if (window.mobilecheck()) {
+
+			if (getCookie('visited') == ''){
+				Popup.loadPopup('download-app', null, false);
+				createCookie('visited', 1, 7);
+			}
+		}
+		else {
+			// show the wordbar by default once the map is loaded
+			Wordbar.show();
+		}
+
+		$('#oneword-details-mobile .close-icon').click(function(e){
+			e.preventDefault();
+			$('#oneword-details-mobile').removeClass('active');
+		});
+	});
+</script>
+
+<script>transLoginError = 'Your email and password do not match our records. Try again';transLoginVerify = '<a href="/verify/resend">Your account is not verified. Click here to resend email.</a>'; transLoginLock = 'Your account has been locked for 5 failed password attempts: please check your email to reset your password.';</script>
+
+</body>
+</html>
