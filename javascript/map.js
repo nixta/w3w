@@ -36,11 +36,11 @@ var Map = new function() {
 	this.center	= null;
 	
 	this.marker	= null;
-	this.markerSizes = {
-		desktop: new google.maps.Size(90, 90),
-		tablet: new google.maps.Size(72, 72),
-		mobile: new google.maps.Size(45, 45)
-	};
+	// this.markerSizes = {
+	// 	desktop: new google.maps.Size(90, 90),
+	// 	tablet: new google.maps.Size(72, 72),
+	// 	mobile: new google.maps.Size(45, 45)
+	// };
 	
 	
 	this.mapModes = {
@@ -54,159 +54,163 @@ var Map = new function() {
 	// --
 	
 	this.initialise = function() {
-		$('.menu-mobile .change-three-word-lang').css({display: 'block'});
-	
-		var streetViewEnable = (window.innerWidth > 1025) ? true : false;
-
-		var mapOptions = {
-			center: new google.maps.LatLng(_this.position.lat, _this.position.lng),
-			zoom: _this.zoom,
-			mapTypeId: (window.mobilecheck) ? google.maps.MapTypeId.HYBRID : google.maps.MapTypeId.ROADMAP,
-			streetViewControl: streetViewEnable,
-			disableDoubleClickZoom: true,
-			tilt: 0,
-			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.SMALL
-			}
-		};
-
-
-		google.maps.visualRefresh = true;
-
-		// --
-
-		_this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
+		require(["esri/map"], function(EsriMap) {
+			$('.menu-mobile .change-three-word-lang').css({display: 'block'});
 		
-		_this.geocoder = new google.maps.Geocoder();
+			var streetViewEnable = (window.innerWidth > 1025) ? true : false;
 
-		Wordbar.setHistoryIcons();
+			var mapOptions = {
+				center: [_this.position.lng,_this.position.lat],
+				zoom: _this.zoom,
+				basemap: (window.mobilecheck) ? "hybrid" : "streets"
+			};
 
 
-		google.maps.event.addListener(_this.map, 'dblclick', function(){
-			newZoom = _this.map.getZoom() + 1;
-			if (newZoom <= 21) _this.map.setZoom(newZoom);
-		});
+			_this.map = new EsriMap('map-canvas', mapOptions);
 
-		//google.maps.event.addListener(_this.map, 'dragend', _this.updateMarker);
-		google.maps.event.addListener(_this.map, 'zoom_changed', _this.updateMarker);
-		google.maps.event.addListener(_this.map, 'idle', _this.updateMarker);
+			
+			//_this.geocoder = new google.maps.Geocoder();
 
-		google.maps.event.addListener(Map.map, 'rightclick', function(e) {
-			Menu.set('map').show(e);
-		});
+			Wordbar.setHistoryIcons();
 
-		if (Map.autoload) {
-			Map.getWords();
-		} else {
-			Wordbar.setWords(Map.searchLoaded);
-		}
-		
-		_this.setMarkerCentered();
-		
-		// Add geolocation control to map
-		_this.geolocationControl = document.createElement('div');
-		_this.geolocationControl.className = "map-control show-location";
-		_this.geolocationControl.innerHTML = '<div class="inner" />';
 
-		_this.addMapControl(_this.geolocationControl, _this.geolocationControlIndex);
+			// google.maps.event.addListener(_this.map, 'dblclick', function(){
+			// 	newZoom = _this.map.getZoom() + 1;
+			// 	if (newZoom <= 21) _this.map.setZoom(newZoom);
+			// });
 
-		// Add lock control to map
-		_this.lockControl = document.createElement('div');
-		_this.lockControl.className = "map-control lock";
-		_this.lockControl.innerHTML = '<div class="inner">' + transLockPin + '</div>';
+			// google.maps.event.addListener(_this.map, 'zoom_changed', _this.updateMarker);
+			// google.maps.event.addListener(_this.map, 'idle', _this.updateMarker);
 
-		// Add find pin control
-		_this.findControl = document.createElement('div');
-		_this.findControl.className = "map-control find-pin";
-		_this.findControl.innerHTML = '<div class="inner">' + transFindPin + '</div>';
+			// google.maps.event.addListener(Map.map, 'rightclick', function(e) {
+			// 	Menu.set('map').show(e);
+			// });
 
-		_this.addLockControl();
-		
-		// Marker menu
-		MarkerMenu.initialise();
+			_this.map.on("load", function () {
+				if (Map.autoload) {
+					Map.getWords();
+				} else {
+					Wordbar.setWords(Map.searchLoaded);
+				}
+				_this.map.disableDoubleClickZoom();
+			});
 
-		$(document).on('click', '.show-location', function(e) {
-			e.preventDefault();
+			_this.map.on("extent-change", function (deltaInfo) {
+				_this.updateMarker();
+			});
 
-			if (Map.mapMode === Map.mapModes.DIRECTIONS && _this.geoMarker) {
-				Map.map.setCenter(_this.geoMarker.getPosition());
-				Map.map.setZoom(16);
-				return;
-			}
+			_this.map.on("click", function (e) {
+				if (e.button == 2) {
+					Menu.set('map').show(e);
+				}
+			});
+			
+			// _this.setMarkerCentered();
+			
+			// Add geolocation control to map
+			_this.geolocationControl = document.createElement('div');
+			_this.geolocationControl.className = "map-control show-location";
+			_this.geolocationControl.innerHTML = '<div class="inner" />';
 
-			if (_this.geoMarker) {
-				var currentPosition = _this.geoMarker.getPosition();
-				if (typeof currentPosition === 'undefined' || !currentPosition) {
-					delete _this.geoMarker;
-					$('.show-location').trigger('click');
+			// _this.addMapControl(_this.geolocationControl, _this.geolocationControlIndex);
+
+			// Add lock control to map
+			_this.lockControl = document.createElement('div');
+			_this.lockControl.className = "map-control lock";
+			_this.lockControl.innerHTML = '<div class="inner">' + transLockPin + '</div>';
+
+			// Add find pin control
+			_this.findControl = document.createElement('div');
+			_this.findControl.className = "map-control find-pin";
+			_this.findControl.innerHTML = '<div class="inner">' + transFindPin + '</div>';
+
+			// _this.addLockControl();
+			
+			// Marker menu
+			MarkerMenu.initialise();
+
+			$(document).on('click', '.show-location', function(e) {
+				e.preventDefault();
+
+				if (Map.mapMode === Map.mapModes.DIRECTIONS && _this.geoMarker) {
+					Map.map.setCenter(_this.geoMarker.getPosition());
+					Map.map.setZoom(16);
 					return;
 				}
-				Map.map.setCenter(currentPosition);
-				Map.updateMarker();
-			} else {
-				_this.setGeoMarker(function(){
-					if (!_this.geoMarker) {
-						alert('Could not determine your location. Please try again later.');
+
+				if (_this.geoMarker) {
+					var currentPosition = _this.geoMarker.getPosition();
+					if (typeof currentPosition === 'undefined' || !currentPosition) {
+						delete _this.geoMarker;
+						$('.show-location').trigger('click');
+						return;
 					}
-					var pos = _this.geoMarker.getPosition();
-					Map.map.setCenter(pos);
+					Map.map.setCenter(currentPosition);
 					Map.updateMarker();
-				});
-			}
-		});
+				} else {
+					_this.setGeoMarker(function(){
+						if (!_this.geoMarker) {
+							alert('Could not determine your location. Please try again later.');
+						}
+						var pos = _this.geoMarker.getPosition();
+						Map.map.setCenter(pos);
+						Map.updateMarker();
+					});
+				}
+			});
 
-		$(document).on('click', '.map-control.lock', function(e) {
-			e.preventDefault();
-			if (Map.mapMode === Map.mapModes.DIRECTIONS) {
-				return;
-			}
-			
-			_this.toggleLock();
-			
-			if (_this.markerLocked) {
-				Map.setMode(Map.mapModes.FIXED);
-			} else {
-				Map.setMode(Map.mapModes.CENTER);
-			}
-		});
-
-		$(document).on('click', '.map-control.find-pin', function(e){
-			e.preventDefault();
-			if (Map.mapMode === Map.mapModes.FIXED || Map.mapMode === Map.mapModes.DIRECTIONS) {
-				if (!Map.marker) {
+			$(document).on('click', '.map-control.lock', function(e) {
+				e.preventDefault();
+				if (Map.mapMode === Map.mapModes.DIRECTIONS) {
 					return;
 				}
-				var position = Map.marker.getPosition();
-				if (!position) {
-					return;
+				
+				_this.toggleLock();
+				
+				if (_this.markerLocked) {
+					Map.setMode(Map.mapModes.FIXED);
+				} else {
+					Map.setMode(Map.mapModes.CENTER);
 				}
-				Map.map.panTo(position);
-			}
-		});
-		
-		_this.zooming = false;
-		
-		$('#map-canvas').get(0).addEventListener('mousewheel', function(e){
-			if (_this.mapMode !== _this.mapModes.CENTER) {
-				return;
-			}
-			e.preventDefault();
-			e.stopPropagation();
-			
-			_this.zooming = true;
-			if (e.wheelDelta < 0) {
-				_this.zoomOut(function(){
-					_this.zooming = false;
-				});
-			} else {
-				_this.zoomIn(function(){
-					_this.zooming = false;
-				});
-			}
-		}, true);
+			});
 
-		grid = new Graticule(Map.map);
+			$(document).on('click', '.map-control.find-pin', function(e){
+				e.preventDefault();
+				if (Map.mapMode === Map.mapModes.FIXED || Map.mapMode === Map.mapModes.DIRECTIONS) {
+					if (!Map.marker) {
+						return;
+					}
+					var position = Map.marker.getPosition();
+					if (!position) {
+						return;
+					}
+					Map.map.panTo(position);
+				}
+			});
+			
+			_this.zooming = false;
+			
+			// $('#map-canvas').get(0).addEventListener('mousewheel', function(e){
+			// 	if (_this.mapMode !== _this.mapModes.CENTER) {
+			// 		return;
+			// 	}
+			// 	e.preventDefault();
+			// 	e.stopPropagation();
+				
+			// 	_this.zooming = true;
+			// 	if (e.wheelDelta < 0) {
+			// 		_this.zoomOut(function(){
+			// 			_this.zooming = false;
+			// 		});
+			// 	} else {
+			// 		_this.zoomIn(function(){
+			// 			_this.zooming = false;
+			// 		});
+			// 	}
+			// }, true);
+
+			// grid = new Graticule(Map.map);
+		});
 	};
 
 	this.addFindControl = function() {
@@ -525,7 +529,7 @@ var Map = new function() {
 		if (!position || !(position instanceof google.maps.LatLng)) {
 			switch (_this.mapMode) {
 				case _this.mapModes.CENTER:
-					position = _this.map.getCenter();
+					position = _this.map.geographicExtent.getCenter();
 				break;
 				
 				case _this.mapModes.FIXED:
@@ -535,7 +539,7 @@ var Map = new function() {
 			}
 		}
 		
-		var positionString = position.lat().toFixed(6) + ',' + position.lng().toFixed(6);
+		var positionString = position.y.toFixed(6) + ',' + position.x.toFixed(6);
 				
 		$.get(root + '/position/' + positionString, { lang: Map.language, debug: 1 }, function (res) {
 			clearTimeout(loadingTimeout);
@@ -546,13 +550,13 @@ var Map = new function() {
 				var words = res.words.join('.');
 				Wordbar.setWords(words);
 
-				var position = Map.map.getCenter();
+				var position = Map.map.geographicExtent.getCenter();
 				
 				// Set new words
 				Words.words = words;
 				Words.oneword = false;
-				Words.latitude = position.lat();
-				Words.longitude = position.lng();
+				Words.latitude = position.y;
+				Words.longitude = position.x;
 				Words.info = null;
 				
 				Words.appendToHistory();
@@ -597,9 +601,9 @@ var Map = new function() {
 	};
 	
 	this.getWordsCenter = function(callback) {
-		var mapCenter = Map.map.getCenter();
+		var mapCenter = Map.map.geographicExtent.getCenter();
 		
-		if (mapCenter && Words.positionSet() && mapCenter.lat().toFixed(6) === Words.lat().toFixed(6) && mapCenter.lng().toFixed(6) === Words.lng().toFixed(6)) {
+		if (mapCenter && Words.positionSet() && mapCenter.y.toFixed(6) === Words.lat().toFixed(6) && mapCenter.x.toFixed(6) === Words.lng().toFixed(6)) {
 			return;
 		}
 		
@@ -1201,6 +1205,9 @@ var Wordbar = new function() {
 };
 
 var Directions = new function () {
+	// TODO - Cleanup
+	return;
+
 	var _this = this;
 	this.result = null;
 	this.travel_mode = null;
@@ -1642,7 +1649,7 @@ var MarkerMenu = new function() {
 };
 
 function MenuOverlay(map) { this.setMap(map); }
-MenuOverlay.prototype = new google.maps.OverlayView();
+// MenuOverlay.prototype = new google.maps.OverlayView();
 MenuOverlay.prototype.onAdd = function() { 
 	var _this = this;
 	this.listeners_ = [
@@ -1681,7 +1688,7 @@ function Center(opt_options) {
 	div.style.cssText = 'position: absolute; display: none';
 };
 
-Center.prototype = new google.maps.OverlayView;
+// Center.prototype = new google.maps.OverlayView;
 
 // Implement onAdd
 Center.prototype.onAdd = function() {
@@ -1734,23 +1741,24 @@ $(function() {
 	// initialise map
 	Map.initialise();
 	
-	google.maps.event.addListener(Map.map, 'center_changed', function(e){
-		if (!Map.marker) {
-			return;
-		}
-		switch (Map.mapMode) {
-			case Map.mapModes.FIXED:
-			case Map.mapModes.DIRECTIONS:
-				if (!Map.map.getBounds().contains(Map.marker.getPosition())) { 
-					Menu.menu.find('.find-pin').css({display: 'block'});
-				} else {
-					Menu.menu.find('.find-pin').css({display: 'none'});
-				}
-			break;
-			default:
-				Menu.menu.find('.find-pin').css({display: 'none'});
-		}
-	});
+	// TODO - Relink
+	// google.maps.event.addListener(Map.map, 'center_changed', function(e){
+	// 	if (!Map.marker) {
+	// 		return;
+	// 	}
+	// 	switch (Map.mapMode) {
+	// 		case Map.mapModes.FIXED:
+	// 		case Map.mapModes.DIRECTIONS:
+	// 			if (!Map.map.getBounds().contains(Map.marker.getPosition())) { 
+	// 				Menu.menu.find('.find-pin').css({display: 'block'});
+	// 			} else {
+	// 				Menu.menu.find('.find-pin').css({display: 'none'});
+	// 			}
+	// 		break;
+	// 		default:
+	// 			Menu.menu.find('.find-pin').css({display: 'none'});
+	// 	}
+	// });
 	
 	// Responsive JavaScript
 	$(window).resize(function() {
