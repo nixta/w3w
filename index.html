@@ -28,6 +28,83 @@
 	<!--[if lte IE 8]>
 	input[type="password"] { font-family: Arial; }
 	<![endif]-->
+<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+<style>
+  .LocateButton .zoomLocateButton {
+    background-color: #e6323d;
+    background-image: url(http://map.what3words.com/images/map/icon-location-new.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 3px;
+    background-size: 16px;
+  }
+
+  .map-control.lock {
+    text-align: center;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  #w3w-marker {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    pointer-events: none;
+    background-image: url(http://map.what3words.com/images/map/marker.png);
+  }
+
+  #map-controls {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    z-index: 1;
+  }
+
+  #map-controls > .map-control {
+    padding: 0;
+    margin-left: 0;
+  }
+
+  #map-controls > div {
+    margin-top: 5px !important;
+  }
+
+  #map-controls > div:first-child {
+    margin-top: 0px !important;
+  }
+
+  #mapDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  .above-esri-map {
+    z-index: 40 !important;
+  }
+
+  #search-container {
+    position: absolute;
+    top: 20px;
+    left: 35%;
+  }
+
+  #arcgis-search .searchInput {
+    width: 300px;
+  }
+
+  #search-container .tooltip-icon.dark {
+    background-color: #e6323d !important;
+    top: 0 !important;
+  }
+
+  #search-container .convert {
+    position: absolute;
+    top: 0;
+    left: 390px;
+  }
+</style>
 </head>
 <body class="pg-home">
 		<div id="head">
@@ -60,26 +137,8 @@
 				<a href="#" id="collapse" class="">Menu</a>
 			</nav>
 		</div>
+
 		<div id="map">
-<!-- 		<div id="search">
-			<form method="get" action="/" class="search">
-				<div class="words">
-					<input type="submit" autocorrect="off" autocapitalize="off" value="" class="button search-lens">
-					<input class="w3w-search text" type="text" placeholder="" name="words">	
-					<div id="side"><p id="error">We couldn't find any results for <span class="text"></span></div>
-				
-					<div class="convert">
-						<a class="tooltip-icon dark" data-info="		&lt;strong&gt;Search for anything at all, for example:&lt;/strong&gt;&lt;br&gt;
-				&lt;a href=&quot;/limit.broom.flip&quot; class=&quot;example&quot;&gt;limit.broom.flip &lt;span&gt;3 words&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
-		&lt;a href=&quot;/Notting Hill, London&quot; class=&quot;example&quot;&gt;Notting Hill, London &lt;span&gt;any location&lt;/span&gt;&lt;/a&gt;
-		" href="#">?</a>
-					</div>
-				
-				</div>	
-				
-			</form>
-		</div>
- -->
  			<div id="sharebox">
 			<div class="close"></div>
 			<div class="inner">
@@ -238,7 +297,6 @@ rcmenuLanguages = {
 <script src="http://map.what3words.com/javascript/jquery.smartbanner.js?v=26f6e"></script>
 
 <!-- <script src="//maps.googleapis.com/maps/api/js?libraries=places&client=gme-what3wordsltd&sensor=false&language=en"></script> -->
-<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
 <script src="http://js.arcgis.com/3.13/"></script>
 
 <script src="http://map.what3words.com/javascript/jquery.touchwipe.min.js?v=e5034"></script>
@@ -249,82 +307,6 @@ rcmenuLanguages = {
 <script src="http://map.what3words.com/javascript/selfie.js?v=441b8"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script src="javascript/autocomplete.js?v=b3245"></script>
-<style>
-	.LocateButton .zoomLocateButton {
-		background-color: #e6323d;
-		background-image: url(http://map.what3words.com/images/map/icon-location-new.png);
-		background-repeat: no-repeat;
-		background-position: center center;
-		border-radius: 3px;
-		background-size: 16px;
-	}
-
-	.map-control.lock {
-	  text-align: center;
-	  font-family: Roboto,Arial,sans-serif;
-	  font-size: 11px;
-	  font-weight: 400;
-	}
-
-	#w3w-marker {
-	  width: 90px;
-	  height: 90px;
-	  position: absolute;
-    pointer-events: none;
-	  background-image: url(http://map.what3words.com/images/map/marker.png);
-	}
-
-  #map-controls {
-    position: absolute;
-    top: 100px;
-    left: 20px;
-    z-index: 1;
-  }
-
-  #map-controls > .map-control {
-    padding: 0;
-    margin-left: 0;
-  }
-
-  #map-controls > div {
-    margin-top: 5px !important;
-  }
-
-  #map-controls > div:first-child {
-    margin-top: 0px !important;
-  }
-
-  #mapDiv {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-  }
-
-  .above-esri-map {
-    z-index: 40 !important;
-  }
-
-  #search-container {
-    position: absolute;
-    top: 20px;
-    left: 35%;
-  }
-
-  #arcgis-search .searchInput {
-    width: 300px;
-  }
-
-  #search-container .tooltip-icon.dark {
-    background-color: #e6323d !important;
-    top: 0 !important;
-  }
-
-  #search-container .convert {
-    position: absolute;
-    top: 0;
-    left: 390px;
-  }
-</style>
 <script> $(document).ready(function(){ $.smartbanner({ daysHidden: 7, daysReminder: 1, title: 'What3Words'  }); }); 
  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
  ga('create', 'UA-58731966-3', 'auto');  // Replace with your property ID.
