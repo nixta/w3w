@@ -211,36 +211,6 @@ var Map = new function() {
       // Marker menu
       MarkerMenu.initialise();
 
-      // $(document).on('click', '.show-location', function(e) {
-      //   e.preventDefault();
-
-      //   if (Map.mapMode === Map.mapModes.DIRECTIONS && _this.geoMarker) {
-      //     Map.map.setCenter(_this.geoMarker.getPosition());
-      //     Map.map.setZoom(16);
-      //     return;
-      //   }
-
-      //   if (_this.geoMarker) {
-      //     var currentPosition = _this.geoMarker.getPosition();
-      //     if (typeof currentPosition === 'undefined' || !currentPosition) {
-      //       delete _this.geoMarker;
-      //       $('.show-location').trigger('click');
-      //       return;
-      //     }
-      //     Map.map.setCenter(currentPosition);
-      //     Map.updateMarker();
-      //   } else {
-      //     _this.setGeoMarker(function(){
-      //       if (!_this.geoMarker) {
-      //         alert('Could not determine your location. Please try again later.');
-      //       }
-      //       var pos = _this.geoMarker.getPosition();
-      //       Map.map.setCenter(pos);
-      //       Map.updateMarker();
-      //     });
-      //   }
-      // });
-
       $(document).on('click', '.map-control.lock', function(e) {
         e.preventDefault();
         if (Map.mapMode === Map.mapModes.DIRECTIONS) {
@@ -399,30 +369,6 @@ var Map = new function() {
     Menu.menu.find('.lock').removeClass('locked').html(transLockPin);
   };
   
-  // this.zoomIn = function(callback) {
-  //   var currentZoomLevel = _this.map.getZoom();
-  //   var newZoom = ++currentZoomLevel;
-  //   var zoomChangeListener = google.maps.event.addListener(_this.map, 'idle', function(e) {
-  //     google.maps.event.removeListener(zoomChangeListener);
-  //     if (typeof callback !== 'undefined') {
-  //       callback.call(_this);
-  //     }
-  //   });
-  //   _this.map.setZoom(newZoom);
-  // };
-  
-  // this.zoomOut = function(callback) {
-  //   var currentZoomLevel = _this.map.getZoom();
-  //   var newZoom = --currentZoomLevel;
-  //   var zoomChangeListener = google.maps.event.addListener(_this.map, 'idle', function(e) {
-  //     google.maps.event.removeListener(zoomChangeListener);
-  //     if (typeof callback !== 'undefined') {
-  //       callback.call(_this);
-  //     }
-  //   });
-  //   _this.map.setZoom(newZoom);
-  // };
-
   this.setMode = function(mode) {
     if (_this.mapMode === mode) {
       return;
@@ -477,19 +423,6 @@ var Map = new function() {
     _this.updateMarker();
   };
   
-  // this.addMarker = function(position) {
-  //   _this.setResponsiveMarkerSize();
-  //   _this.setMarkerSize();
-
-  //   _this.markerGraphic.geometry = _this.map.extent.getCenter();
-  //   _this.markerLayer.show();
-    
-  // };
-  
-  // this.removeMarker = function() {
-  //   _this.markerLayer.hide();
-  // };
-
   this.switchToCentered = function() {
     this.map.centerAt(this.markerGraphic.geometry).then(function () {
       $("#w3w-marker").show();
@@ -540,22 +473,6 @@ var Map = new function() {
     this.markerRenderer.symbol = this.markerSymbol;
     this.markerLayer.redraw();
   };
-  
-  // this.setMarkerDraggable = function() {
-  //   if (!_this.marker) {
-  //     return;
-  //   }
-  //   google.maps.event.addListener(_this.marker, 'dragend', function(e){
-  //     Map.getWords(_this.marker.getPosition());
-  //   });
-  // };
-  
-  // this.unsetMarkerDraggable = function() {
-  //   if (!_this.marker) {
-  //     return;
-  //   }
-  //   google.maps.event.clearInstanceListeners(_this.marker);
-  // };
   
   this.getCoords = function () {
     var p = _this.map.getCenter();
@@ -700,34 +617,6 @@ var Map = new function() {
     }
   };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1762,26 +1651,7 @@ MenuOverlay.prototype.draw = function() {
 $(function() {
   // initialise map
   Map.initialise();
-  
-  // TODO - Relink
-  // google.maps.event.addListener(Map.map, 'center_changed', function(e){
-  //  if (!Map.marker) {
-  //    return;
-  //  }
-  //  switch (Map.mapMode) {
-  //    case Map.mapModes.FIXED:
-  //    case Map.mapModes.DIRECTIONS:
-  //      if (!Map.map.getBounds().contains(Map.marker.getPosition())) { 
-  //        Menu.menu.find('.find-pin').css({display: 'block'});
-  //      } else {
-  //        Menu.menu.find('.find-pin').css({display: 'none'});
-  //      }
-  //    break;
-  //    default:
-  //      Menu.menu.find('.find-pin').css({display: 'none'});
-  //  }
-  // });
-  
+    
   // Responsive JavaScript
   $(window).resize(function() {
     google.maps.event.trigger(Map.map, 'resize'); 
