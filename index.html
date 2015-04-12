@@ -61,7 +61,7 @@
 			</nav>
 		</div>
 		<div id="map">
-		<div id="search">
+<!-- 		<div id="search">
 			<form method="get" action="/" class="search">
 				<div class="words">
 					<input type="submit" autocorrect="off" autocapitalize="off" value="" class="button search-lens">
@@ -79,7 +79,8 @@
 				
 			</form>
 		</div>
-			<div id="sharebox">
+ -->
+ 			<div id="sharebox">
 			<div class="close"></div>
 			<div class="inner">
 				<h2>Share OneWord location</h2>
@@ -97,17 +98,22 @@
 		</div>
 			
 	<div class="mapInner">
-		<div id="map-canvas">
-		</div>
-		<div id="map-controls">
-<!-- 			<div id="locate-button"></div>
-			<div id="lock-button"><span class="inner"></span></div>
- -->		</div>
-		<div id="w3w-marker"></div>
+		<div id="mapDiv"></div>
+		<div id="map-controls"></div>
+    <div id="search-container">
+      <div id="arcgis-search"></div>
+      <div class="convert">
+        <a class="tooltip-icon dark" data-info="    &lt;strong&gt;Search for anything at all, for example:&lt;/strong&gt;&lt;br&gt;
+        &lt;a href=&quot;/limit.broom.flip&quot; class=&quot;example&quot;&gt;limit.broom.flip &lt;span&gt;3 words&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+    &lt;a href=&quot;/Notting Hill, London&quot; class=&quot;example&quot;&gt;Notting Hill, London &lt;span&gt;any location&lt;/span&gt;&lt;/a&gt;
+    " href="#">?</a>
+      </div>
+    </div>
+		<div id="w3w-marker" class="above-esri-map"></div>
 		<div class="pin css"></div>
 	</div>
 	
-	<div id="oneword-details-mobile">
+	<div id="oneword-details-mobile" class="above-esri-map">
 		<a href="#" class="close-icon"><img src="http://map.what3words.com/images/map/icon-details-arrow.png" /></a>
 		<section class="location">
 			<!--<h3>Location</h3>-->
@@ -142,7 +148,7 @@
 		</section>
 		<div class="clear"></div>
 	</div>
-	<div id="word-view" class="">
+	<div id="word-view" class="above-esri-map">
 		<div class="wordbar-toggle"></div>
 		<a href="#" id="oneword-details-toggle"></a>
 		<a class="history back"></a>
@@ -227,7 +233,7 @@ rcmenuLanguages = {
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://map.what3words.com/javascript/_liberty.structure.js?v=989c4"></script>
-<script src="http://map.what3words.com/javascript/general.js?v=4fed4"></script>
+<script src="javascript/general.js?v=4fed4"></script>
 <script src="http://map.what3words.com/javascript/popup.js?v=745cd"></script>
 <script src="http://map.what3words.com/javascript/jquery.smartbanner.js?v=26f6e"></script>
 
@@ -242,11 +248,8 @@ rcmenuLanguages = {
 <!-- <script src="geolocationmarker-compiled.js?v=a15cb"></script> -->
 <script src="http://map.what3words.com/javascript/selfie.js?v=441b8"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<script src="http://map.what3words.com/javascript/autocomplete.js?v=b3245"></script>
+<script src="javascript/autocomplete.js?v=b3245"></script>
 <style>
-	#locate-button {
-	}
-
 	.LocateButton .zoomLocateButton {
 		background-color: #e6323d;
 		background-image: url(http://map.what3words.com/images/map/icon-location-new.png);
@@ -266,10 +269,8 @@ rcmenuLanguages = {
 	#w3w-marker {
 	  width: 90px;
 	  height: 90px;
-	  position: relative;
-	  z-index: 1000;
-	  margin-left: 594px;
-	  margin-top: 541px;
+	  position: absolute;
+    pointer-events: none;
 	  background-image: url(http://map.what3words.com/images/map/marker.png);
 	}
 
@@ -291,6 +292,41 @@ rcmenuLanguages = {
 
   #map-controls > div:first-child {
     margin-top: 0px !important;
+  }
+
+  #mapDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  .mapInner {
+    margin-top: 40px;
+  }
+
+  .above-esri-map {
+    z-index: 40 !important;
+  }
+
+  #search-container {
+    position: absolute;
+    top: 25px;
+    left: 35%;
+  }
+
+  #arcgis-search .searchInput {
+    width: 300px;
+  }
+
+  #search-container .tooltip-icon.dark {
+    background-color: #e6323d !important;
+    top: 0 !important;
+  }
+
+  #search-container .convert {
+    position: absolute;
+    top: 0;
+    left: 390px;
   }
 </style>
 <script> $(document).ready(function(){ $.smartbanner({ daysHidden: 7, daysReminder: 1, title: 'What3Words'  }); }); 
