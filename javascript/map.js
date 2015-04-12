@@ -63,6 +63,8 @@ var Map = new function() {
   
   this.basemap = null;
   this.streetsOverlayLayer = null;
+
+  this.geolocation = null;
   // --
   
   this.initialise = function() {
@@ -90,20 +92,6 @@ var Map = new function() {
 
 
       _this.map = new EsriMap('mapDiv', mapOptions);
-
-      // _this.geocoder = new google.maps.Geocoder();
-
-      var searchBar = new Search({
-        map: _this.map,
-        enableInfoWindow: false,
-        enableHighlight: false
-      }, "arcgis-search");
-
-      searchBar.on('select-result', function (e) {
-        _this.markerGraphic.geometry = e.result.feature.geometry;
-        _this.markerLayer.remove(_this.markerGraphic);
-        _this.markerLayer.add(_this.markerGraphic);
-      });
 
       Wordbar.setHistoryIcons();
 
@@ -186,9 +174,39 @@ var Map = new function() {
         map: _this.map
       }, "locate-button");
 
+      locateButton.on('locate', function (e) {
+        _this.geolocation = e.graphic.geometry;
+      });
+
       locateButton.startup();
 
+      var searchBar = new Search({
+        map: _this.map,
+        enableInfoWindow: false,
+        enableHighlight: false
+      }, "arcgis-search");
 
+      searchBar.on('select-result', function (e) {
+        _this.markerGraphic.geometry = e.result.feature.geometry;
+        _this.markerLayer.remove(_this.markerGraphic);
+        _this.markerLayer.add(_this.markerGraphic);
+
+        if (_this.geolocation !== null) {
+          _this.setMode(Map.mapModes.FIXED);
+          require(["esri/geometry/Extent"], function (Extent) {
+            var geolocation = _this.geolocation,
+                resultLocation = _this.markerGraphic.geometry;
+            var ext1 = new Extent(geolocation.x,geolocation.y,
+                                  geolocation.x,geolocation.y,
+                                  geolocation.spatialReference),
+                ext2 = new Extent(resultLocation.x,resultLocation.y,
+                                 resultLocation.x,resultLocation.y,
+                                 resultLocation.spatialReference),
+                ext3 = ext1.union(ext2);
+            _this.map.setExtent(ext3, true);
+          });
+        }
+      });
 
       // Marker menu
       MarkerMenu.initialise();
