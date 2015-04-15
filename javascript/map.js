@@ -183,7 +183,8 @@ var Map = new function() {
       var searchBar = new Search({
         map: _this.map,
         enableInfoWindow: false,
-        enableHighlight: false
+        enableHighlight: false,
+        caption: ""
       }, "arcgis-search");
 
       searchBar.on('select-result', function (e) {
